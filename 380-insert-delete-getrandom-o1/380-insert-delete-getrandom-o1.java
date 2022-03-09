@@ -1,37 +1,47 @@
 class RandomizedSet {
     
-    HashSet<Integer> set;
+    Map<Integer , Integer> map;
+    List<Integer> nums;
+    Random rndm;
     
     public RandomizedSet() {
-        this.set = new HashSet<>();
+        map = new HashMap<>();
+        nums = new ArrayList<>();
+        rndm = new Random();
     }
     
     public boolean insert(int val) {
-        if(set.contains(val)) return false;
-        set.add(val);
+        
+        if(map.containsKey(val)) return false;
+        
+        map.put(val , nums.size());
+        nums.add(val);
         return true;
     }
     
     public boolean remove(int val) {
-        if(set.contains(val)){
-            set.remove(val);
-            return true;
+        
+        if(!map.containsKey(val)) return false;
+        
+        int idx = map.get(val);
+        int lastIdx = nums.size()-1;
+        
+        if(idx != lastIdx){
+            int lastVal = nums.get(lastIdx);
+            nums.set(idx , lastVal);
+            map.put(lastVal , idx);
         }
-        return false;
+        
+        nums.remove(lastIdx);
+        map.remove(val);
+
+        return true;
     }
     
     public int getRandom() {
-         // convert HashSet to an array
-        Integer[] arrayNumbers = set.toArray(new Integer[set.size()]);
-  
-        // generate a random number
-        Random rndm = new Random();
-  
-        // this will generate a random number between 0 and
-        // HashSet.size - 1
-        int idx = rndm.nextInt(set.size());
+        int rnIdx = rndm.nextInt(nums.size());
         
-        return arrayNumbers[idx];
+        return nums.get(rnIdx);
     }
 }
 
