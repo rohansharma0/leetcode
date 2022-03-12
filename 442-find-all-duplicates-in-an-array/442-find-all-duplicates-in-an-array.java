@@ -6,12 +6,12 @@ class Solution {
         if(nums.length == 1) return res;
         
         for(int i = 0; i< nums.length ; i++){
-            int idx = Math.abs(nums[i]) - 1;
+            int el = Math.abs(nums[i]) - 1;
             
-            if(nums[idx] < 0){
-                res.add(Math.abs(nums[i]));
+            if(nums[el] < 0){
+                res.add(el+1);
             }else{
-                nums[idx] = -1 * nums[idx];
+                nums[el] = -1 * nums[el];
             }
         }
         
