@@ -1,20 +1,11 @@
 class Solution {
     public String reverseWords(String s) {
+       
+        
+        String[] str = s.trim().split("[ ]+");
         
         int i = 0;
-        int j = s.length()-1;
-        
-        while(s.charAt(i) == ' '){
-            i++;
-        }
-        while(s.charAt(j) == ' '){
-            j--;
-        }
-        
-        String[] str = s.substring(i , j+1).split("[ ]+");
-        
-        i = 0;
-        j = str.length-1;
+        int j = str.length-1;
         
         while(i < j){
             String t = str[i];
