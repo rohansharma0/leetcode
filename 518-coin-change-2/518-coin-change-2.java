@@ -1,37 +1,34 @@
 class Solution {
-    public int change(int amount, int[] coins) {
+    public int change(int amt, int[] coins) {
         
         int n = coins.length;
         
-        int[][] dp = new int[n][amount+1];
+        int[]prev = new int[amt+1];
         
-        for(int[] x : dp){
-            Arrays.fill(x , -1);
+        for(int j = 0 ; j<= amt ; j++){
+            if(j % coins[0] == 0) prev[j] = 1;
         }
         
-        return solve(n-1 , coins , amount , dp);
-    }
-    
-    public int solve(int i , int[] coins , int amt , int[][] dp){
-        
-        if(i == 0){
-            if(amt % coins[i] == 0) return 1;
-            return 0;
+        for(int i = 1 ; i< n ; i++){
+            int[]curr = new int[amt+1];
+            for(int j = 0 ; j<=amt ; j++){
+                
+                //nottake
+                int nottake = prev[j];
+
+                //take
+                int take = 0;
+
+                if(coins[i] <= j){
+                    take = curr[j - coins[i]];
+                }
+
+                curr[j] = nottake + take;
+                
+            }
+            prev = curr;
         }
         
-        if(dp[i][amt] != -1) return dp[i][amt];
-        
-        //nottake
-        int nottake = solve(i-1 , coins , amt , dp);
-        
-        //take
-        int take = 0;
-        
-        if(coins[i] <= amt){
-            take = solve(i , coins , amt - coins[i] , dp);
-        }
-        
-        return dp[i][amt] = nottake + take;
-        
+        return prev[amt];
     }
 }
