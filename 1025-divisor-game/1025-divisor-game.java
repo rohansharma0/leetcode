@@ -12,9 +12,13 @@ class Solution {
         
         if(dp[n] != -1) return (dp[n] == 1);
         
-        for(int i = 1 ; i< n ; i++){
+        for(int i = 1 ; i*i<=n ; i++){
             if(n % i == 0){
                 if(!solve(n-i , dp)){
+                    dp[n] = 1;
+                    return true;
+                }
+                if(i != 1 && !solve(n-(n/i), dp)){
                     dp[n] = 1;
                     return true;
                 }
