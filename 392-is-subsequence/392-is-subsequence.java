@@ -2,16 +2,27 @@ class Solution {
     public boolean isSubsequence(String s, String t) {
         int n = s.length();
         int m = t.length();
-        return solve(n-1 , m-1 , s , t);
+        
+        boolean[] prev = new boolean[m+1];
+        
+        for(int j = 0; j<= m ; j++){
+            prev[j] = true;
+        }
+        
+        for(int i = 1 ; i<= n ; i++){
+            boolean[] curr = new boolean[m+1];
+            for(int j = 1 ; j<= m ; j++){
+                
+                if(s.charAt(i-1) == t.charAt(j-1)){
+                    curr[j] = prev[j-1];
+                }else{
+                    curr[j] = curr[j-1];
+                }
+            }
+            prev = curr;
+        }
+        
+        return prev[m];
     }
     
-    public boolean solve(int i , int j , String s , String t){
-        
-        if(i < 0) return true;
-        if(j < 0 && i>= 0) return false;
-        
-        if(s.charAt(i) == t.charAt(j)) return solve(i-1 , j-1 , s, t);
-        
-        return solve(i , j-1 , s , t);
-    }
 }
