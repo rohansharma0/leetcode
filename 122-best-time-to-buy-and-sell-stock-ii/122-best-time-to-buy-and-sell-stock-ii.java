@@ -2,27 +2,27 @@ class Solution {
     public int maxProfit(int[] prices) {
         int n = prices.length;
         
-        int[][] dp = new int[n][2];
-        for(int[] x : dp){
-            Arrays.fill(x , -1);
+        int[][] dp = new int[n+1][2];
+        
+        dp[n][0] = dp[n][1] = 0;
+        
+        for(int i = n-1 ; i>= 0 ; i--){
+            for(int j = 0 ; j< 2 ; j++){
+                
+                int profit = 0;
+
+                if(j == 1){
+                    profit = Math.max(-prices[i] + dp[i+1][0],dp[i+1][1]);
+                }else{
+                    profit = Math.max(prices[i] + dp[i+1][1],dp[i+1][0]);
+                }
+
+                dp[i][j] =  profit;
+                
+            }
         }
-        return solve(0 , prices , 1 , dp);
+        
+        return dp[0][1];
     }
     
-    public int solve(int i , int[] arr , int buy , int[][] dp){
-        
-        if(i == arr.length) return 0;
-        
-        if(dp[i][buy] != -1) return dp[i][buy];
-        
-        int profit = 0;
-        
-        if(buy == 1){
-            profit = Math.max(-arr[i] + solve(i+1 , arr , 0 , dp) , solve(i+1 , arr , 1 , dp));
-        }else{
-            profit = Math.max(+arr[i] + solve(i+1 , arr , 1 , dp) , solve(i+1 , arr , 0 , dp));
-        }
-        
-        return dp[i][buy] =  profit;
-    }
 }
