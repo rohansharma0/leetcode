@@ -1,23 +1,29 @@
 class Solution {
     public List<List<Integer>> subsets(int[] nums) {
     
-        List<List<Integer>> ans = new ArrayList<>();
+        List<List<Integer>> res = new ArrayList<>();
         
-        getSubsets(0 , nums , new ArrayList<>(), ans);
+        solve(0 , nums , new ArrayList<>() , res);
         
-        return ans;
-        
+        return res;
     }
     
-    public void getSubsets(int idx , int[] nums , List<Integer> ds , List<List<Integer>> ans){
+    
+    public void solve(int i , int[] nums , List<Integer> ds , List<List<Integer>> res){
         
-        if(idx == nums.length){
-            ans.add(new ArrayList<>(ds));
+        if(i == nums.length){
+            res.add(new ArrayList<>(ds));
             return;
         }
-        ds.add(nums[idx]);
-        getSubsets(idx+1 , nums , ds , ans);
+        
+        //pick
+        ds.add(nums[i]);
+        solve(i+1 , nums , ds , res);
+        
         ds.remove(ds.size()-1);
-        getSubsets(idx+1 , nums , ds , ans);
+        
+        //not pick
+        solve(i+1 , nums , ds , res);
+        
     }
 }
