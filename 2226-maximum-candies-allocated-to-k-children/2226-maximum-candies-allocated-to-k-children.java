@@ -4,21 +4,22 @@ class Solution {
         long s = 0;
         for(int e : candies) s += e;
         
-        if(s < k) return 0;
-        
-        long i = 1;
-        long j = s;
-        
+        long i = 0;
+        long j = s / k;
+        j++;
         long ans = 0;
-        while(i <= j){
+        
+        while(i < j){
             
             long mid = i + (j-i)/2;
             
+            if(mid == 0) return 0;
+            
             if(solve(candies , mid) >= k){
-                ans = mid;
+                ans = Math.max(ans , mid);
                 i = mid+1;
             }else{
-                j = mid-1;
+                j = mid;
             }
             
         }
