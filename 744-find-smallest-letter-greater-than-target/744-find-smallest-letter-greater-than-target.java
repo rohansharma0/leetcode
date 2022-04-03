@@ -11,20 +11,20 @@ class Solution {
         
         int j = n-1;
         
-        while(i+ 1 < j){
+        while(i <= j){
             
             int mid = i + (j-i)/2;
             
             if(letters[mid] <= target){
-                i = mid;
+                i = mid + 1;
             }else{
-                j = mid;
+                j = mid -1;
             }
             
         }
         
         
-        return letters[j];
+        return letters[i];
         
     }
 }
