@@ -6,22 +6,22 @@ class Solution {
             Arrays.fill(x , -1);
             
         }
-        return solve(0 , 0 , nums , dp);
+        return solve(0 , -1 , nums , dp);
     }
     
     public int solve(int i , int pi , int[] nums , int[][] dp){
         
         if(i == nums.length) return 0;
         
-        if(dp[i][pi] != -1) return dp[i][pi];
+        if(dp[i][pi+1] != -1) return dp[i][pi+1];
         
         int pick = 0;
-        if(pi == 0 || nums[i] > nums[pi-1]){
-            pick = solve(i+1 , i+1 , nums , dp) + 1;    
+        if(pi == -1 || nums[i] > nums[pi]){
+            pick = solve(i+1 , i , nums , dp) + 1;    
         }
         
         int notPick = solve(i+1 , pi , nums , dp);
 
-        return dp[i][pi] = Math.max(pick , notPick);
+        return dp[i][pi+1] = Math.max(pick , notPick);
     }
 }
