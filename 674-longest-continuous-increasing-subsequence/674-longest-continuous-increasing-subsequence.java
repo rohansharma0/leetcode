@@ -3,20 +3,13 @@ class Solution {
         
         int ans = 1;
         
-        int i = 0;
+        int c = 1;
         
-        int j = 1;
-        
-        while(j < nums.length){
-            
-            if(nums[j] > nums[j-1]){
-                ans = Math.max(ans , (j - i + 1));
-            }else{
-                i = j;
-            }
-            
-            j++;
-            
+        for(int i = 1 ; i<nums.length ; i++){
+            if(nums[i] > nums[i-1]){
+                c++;
+                ans =  Math.max(ans , c);
+            }else c = 1;
         }
         
         return ans;
