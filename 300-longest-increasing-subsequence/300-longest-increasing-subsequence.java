@@ -2,30 +2,27 @@ class Solution {
     public int lengthOfLIS(int[] nums) {
         int n = nums.length;
         
-        int[] next = new int[n+1];
+        int[] dp = new int[n];
         
-        for(int i = n-1 ; i>= 0 ; i--){
+        Arrays.fill(dp , 1);
+        
+        int max = 1;
+        
+        for(int i = 0; i< n ; i++){
             
-            int[] curr = new int[n+1];
-            
-            for(int pi = i-1 ; pi>= -1 ; pi--){
+            for(int j = 0; j< i ; j++){
                 
-                int pick = 0;
-                if(pi == -1 || nums[i] > nums[pi]){
-                    pick = next[i+1] + 1;    
+                if(nums[j] < nums[i]){
+                    dp[i] = Math.max(dp[i] , dp[j] + 1);
                 }
-
-                int notPick = next[pi+1];
-
-                curr[pi+1] = Math.max(pick , notPick);
                 
             }
             
-            next = curr;
+            max = Math.max(dp[i] , max);
             
         }
         
+        return max;
         
-        return next[0];
     }
 }
