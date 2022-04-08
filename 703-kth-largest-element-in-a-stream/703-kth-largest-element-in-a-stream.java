@@ -22,13 +22,8 @@ class KthLargest {
     }
     
     public int add(int val) {
-        if(minH.size() < size){
-            minH.add(val);
-        }else if(minH.size() > 0 && minH.peek() < val){
-            minH.poll();
-            minH.add(val);
-        }
-        
+        minH.add(val);
+        if(minH.size() > size) minH.poll();
         return minH.peek();
     }
 }
