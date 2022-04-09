@@ -1,21 +1,20 @@
 class Solution {
     public int rob(int[] nums) {
+        int[] dp = new int[nums.length];
         
-        int n = nums.length;
+        Arrays.fill(dp , -1);
+        return solve(nums.length-1 , nums , dp);
+    }
+    
+    public int solve(int i , int[] nums , int[] dp){
         
-        int prev = nums[0];
-        int prev2 = 0;
+        if(i < 0) return 0;
+        if(dp[i] != -1) return dp[i];
         
-        for(int i = 1 ; i< n ; i++){
-            int notPick = prev; 
+        int notTake = solve(i-1 , nums , dp);
         
-            int pick = prev2+ nums[i];
-
-            int curr = Math.max(pick , notPick);
-            prev2 = prev;
-            prev = curr;
-        }
+        int take = solve(i-2 , nums ,dp) + nums[i];
         
-        return prev;
+        return dp[i] = Math.max(take , notTake);
     }
 }
