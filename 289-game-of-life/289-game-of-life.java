@@ -1,22 +1,17 @@
 class Solution {
     public void gameOfLife(int[][] board) {
-        
         int n = board.length;
         int m = board[0].length;
         
         for(int i = 0 ; i< n ; i++){
-            
             for(int j = 0; j< m ; j++){
-                
                 if(board[i][j] == 0){
                     solve(board , i , j);
                 }else{
                     solve(board , i , j);
                 }
-                
             }
         }
-        
         for(int i = 0 ; i< n ; i++){
             
             for(int j = 0; j< m ; j++){
@@ -72,7 +67,6 @@ class Solution {
             cnt++;
             if(Math.abs(board[i-1][j-1]) == 1) n1++;
         }
-        
         int n0 = cnt - n1;
         
         if(board[i][j] == 1){
