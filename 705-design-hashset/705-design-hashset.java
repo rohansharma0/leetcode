@@ -1,24 +1,37 @@
 class MyHashSet {
 
-    int[] keys;
-    int size;
+    List<Integer>[] nums;
+    int n;
     
     public MyHashSet() {
-        this.size = (int)1e6+1;
-        this.keys = new int[size];
-        Arrays.fill(keys , -1);
+        this.n = 15000;
+        this.nums = new LinkedList[n];
+    }
+    
+    private int hash(int key){
+        return key % n;
     }
     
     public void add(int key) {
-        keys[key] = key;
+        int i = hash(key);
+        if(nums[i] == null) nums[i] = new LinkedList<>();
+        if(nums[i].indexOf(key) == -1){
+            nums[i].add(key);
+        }
     }
     
     public void remove(int key) {
-        keys[key] = -1;
+        int i = hash(key);
+        if(nums[i] == null) return;
+        if(nums[i].indexOf(key) != -1){
+            nums[i].remove(nums[i].indexOf(key));
+        }
     }
     
     public boolean contains(int key) {
-        return (keys[key] != -1);
+        int i = hash(key);
+        if(nums[i] == null || nums[i].indexOf(key) == -1) return false;
+        return true;
     }
 }
 
