@@ -1,6 +1,6 @@
 class Solution {
     public int maxProfit(int[] prices, int fee) {
-        int n = prices.length;
+     int n = prices.length;
         
         int[] prev = new int[2];
         
