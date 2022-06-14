@@ -1,26 +1,26 @@
 class Solution {
     public List<List<Integer>> generate(int n) {
-
+        
         List<List<Integer>> ans = new ArrayList<>();
         
-        List<Integer> prev = null ;
-
-        for(int i = 0 ; i< n ; i++){
-            
-            List<Integer> curr = new ArrayList<>();
+        List<Integer> prev = null;
+        
+        for(int i = 0 ; i < n ; i++){
+            List<Integer> cur = new ArrayList<>();
             
             for(int j = 0 ; j<= i ; j++){
-                
+
                 if(j == 0 || j == i){
-                    curr.add(1);
+                    cur.add(1);
                 }else{
-                    curr.add(prev.get(j-1) + prev.get(j));
+                    cur.add(prev.get(j) + prev.get(j-1));
                 }
                 
             }
             
-            ans.add(curr);
-            prev = curr;
+            ans.add(cur);
+            prev = cur;
+            
         }
         
         return ans;
