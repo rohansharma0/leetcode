@@ -1,31 +1,33 @@
 class Solution {
-    public List<List<Integer>> combinationSum(int[] nums, int tar) {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
         
         List<List<Integer>> ans = new ArrayList<>();
         
-        solve(0 , nums , tar , new ArrayList<>() ,ans);
+        solve(0 , target , candidates , new ArrayList<>() , ans);
         
         return ans;
-        
     }
-    
-    public void solve(int i , int[] nums , int tar ,List<Integer> ds ,  List<List<Integer>> ans){
+    public void solve(int i , int tar , int[] nums , List<Integer> ds , List<List<Integer>> ans){
         
-        if(i == nums.length ) return;
         
         if(tar == 0){
             ans.add(new ArrayList<>(ds));
             return;
         }
         
-        if(tar < 0) return;
         
-        //pick
-        ds.add(nums[i]);
-        solve(i , nums , tar - nums[i] , ds , ans);
+        if(i >= nums.length) return;
         
-        ds.remove(ds.size()-1);
-        solve(i+1 , nums , tar , ds , ans);
+        //notTake
+        solve(i+1 , tar , nums , ds , ans);
+        
+        //take
+        if(nums[i] <= tar){
+            ds.add(nums[i]);
+            solve(i , tar - nums[i] , nums , ds , ans);
+            ds.remove(ds.size()-1);
+        
+        }
+        
     }
-    
 }
