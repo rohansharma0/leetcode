@@ -1,45 +1,49 @@
 class Solution {
     public List<List<String>> partition(String s) {
-       
-        List<List<String>> res = new ArrayList<>();
         
-        solve(0 , s , new ArrayList<>() , res);
+        List<List<String>> ans = new ArrayList<>();
         
-        return res;
+        solve(0 , new ArrayList<>() , s , ans);
+        
+        return ans;
     }
     
-    public void solve(int idx , String s , List<String> ds , List<List<String>> res){
+    public void solve(int st , List<String> ds , String s , List<List<String>> ans){
         
-        if(idx == s.length()){
-            res.add(new ArrayList<>(ds));
+        if(st == s.length()){
+            ans.add(new ArrayList<>(ds));
             return;
         }
         
         
-        for(int i = idx ; i < s.length() ; i++){
+        for(int et = st ; et < s.length() ; et++){
             
-            if(isPalindrome(s , idx , i)){
+            
+            if(isPalindrome(s , st , et)){
                 
-                ds.add(s.substring(idx , i+1));
-                solve(i+1 ,s , ds , res);
+                ds.add(s.substring(st , et+1));
+                
+                solve(et+1 , ds , s , ans);
+                
                 ds.remove(ds.size()-1);
+                
             }
             
         }
+        
     }
     
     public boolean isPalindrome(String s , int i , int j){
         
         while(i < j){
-            if(s.charAt(i) != s.charAt(j)){
-                return false;
-            }
+            
+            if(s.charAt(i) != s.charAt(j)) return false;
             i++;
             j--;
+            
         }
         
         return true;
         
     }
-    
 }
