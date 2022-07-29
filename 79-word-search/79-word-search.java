@@ -3,14 +3,17 @@ class Solution {
         
         int n = board.length;
         int m = board[0].length;
+        
         for(int i = 0 ; i< n ; i++){
             
-            for(int j = 0 ; j< m ; j++){
+            for(int j = 0 ; j < m ; j++){
+                
                 if(board[i][j] == word.charAt(0)){
                     
-                    boolean[][]vis = new boolean[n][m];
+                    int[][] vis = new int[n][m];
                     
-                    if(solve(board , i , j , n ,m , vis, word)) return true;
+                    if(solve(board , word , 0 , i , j , vis)) return true;
+                    
                 }
                 
             }
@@ -20,27 +23,23 @@ class Solution {
         return false;
     }
     
-    public boolean solve(char[][] board , int i , int j, int n ,int m, boolean[][] vis , String word){
+    public boolean solve(char[][] board , String word , int idx , int i , int j , int[][] vis){
+        if(idx >= word.length()) return true;
+        
+        if(i < 0 || j < 0 || i>= board.length || j >= board[0].length || vis[i][j] == 1) return false;
         
         
+        if(word.charAt(idx) != board[i][j]) return false;
         
-        if(i < 0 || j < 0 || j >= m || i>= n || vis[i][j] == true || word.length() <= 0 || word.charAt(0) != board[i][j]){
-            return false;
-        }
+        vis[i][j] = 1;
         
-        if(word.length() == 1 && vis[i][j] == false){
-            if(board[i][j] == word.charAt(0))return true;
-            return false;
-        }
-        vis[i][j] = true;
-        String res = word.substring(1);
-        boolean t = solve(board , i - 1 , j , n ,m,vis, res);
-        boolean r = solve(board , i , j + 1 , n ,m,vis, res);
-        boolean b = solve(board , i + 1 , j , n ,m,vis, res);
-        boolean l = solve(board , i , j - 1 , n ,m,vis, res);
-        vis[i][j] = false;
+        boolean t = solve(board , word , idx+1 , i+1 , j , vis);
+        boolean d = solve(board , word , idx+1 , i-1 , j , vis);
+        boolean l = solve(board , word , idx+1 , i , j+1 , vis);
+        boolean r = solve(board , word , idx+1 , i , j-1 , vis);
         
-        return t || r || b || l;
+        vis[i][j] = 0;
         
+        return t || d || l || r;
     }
 }
