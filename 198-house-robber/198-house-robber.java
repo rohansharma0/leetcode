@@ -2,27 +2,28 @@ class Solution {
     public int rob(int[] nums) {
        
         int n = nums.length;
-        
         int[] dp = new int[n];
-        Arrays.fill(dp , -1);
-        return solve(n-1 , nums , dp);
         
-    }
-    
-    public int solve(int i , int[] nums , int[] dp){
-
-        if(i < 0){
-            return 0;
+        for(int i = 0 ; i < n ; i++){
+            
+            int take = nums[i];
+            
+            if(i-2 >= 0){
+                take += dp[i-2];
+            }
+            
+            int notTake = 0;
+  
+            if(i-1 >= 0){
+                notTake += dp[i-1];
+            }
+            
+            dp[i] = Math.max(take , notTake);
+            
         }
         
-        if(dp[i] != -1) return dp[i];
+        return dp[n-1];
         
-        
-        int take = solve(i-2 , nums , dp) + nums[i];
-        
-        int notTake = solve(i-1 , nums , dp);
-        
-        return dp[i] = Math.max(take , notTake);
     }
     
 }
