@@ -3,24 +3,22 @@ class Solution {
         
         int[] dp = new int[target+1];
         
-        Arrays.fill(dp , -1);
         
-        return solve(nums , target , dp);
+        dp[0] = 1;
+        
+        for(int i = 1 ; i<=target ; i++){
+            int ans = 0;
+        
+            for(int j = 0 ; j< nums.length ; j++){
+                if(i - nums[j] >= 0){
+                    ans += dp[i - nums[j]];
+                }
+            }
+            dp[i] = ans;
+            
+        }
+        
+        return dp[target];
     }
     
-    public int solve(int[] nums , int tar , int[] dp){
-        
-        if(tar == 0) return 1;
-        
-        if(tar < 0) return 0;
-        
-        if(dp[tar] != -1) return dp[tar];
-        
-        int ans = 0;
-        
-        for(int i = 0 ; i< nums.length ; i++){
-            ans += solve(nums , tar - nums[i] , dp);
-        }
-        return dp[tar] = ans;
-    }
 }
