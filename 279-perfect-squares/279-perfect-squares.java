@@ -1,20 +1,25 @@
 class Solution {
     public int numSquares(int n) {
+        
         int[] dp = new int[n+1];
         
-        for(int i = 1 ; i<= n ; i++){
-            
-            int min = Integer.MAX_VALUE;
+        Arrays.fill(dp , -1);
         
-            for(int j = 1 ; j*j <= i ; j++){
-                int x = dp[i - (j*j)] + 1; 
-                min = Math.min(min , x);
-            }
-
-            dp[i] = min;
-            
+        return solve(n , dp);
+    }
+    
+    public int solve(int n , int[] dp){
+        if(n <= 0) return 0;
+        
+        if(dp[n] != -1) return dp[n];
+        
+        int min = Integer.MAX_VALUE;
+        
+        for(int i = 1 ; i*i <= n ; i++){
+            int x = solve(n - (i*i) , dp) + 1;
+            min = Math.min(x , min);
         }
         
-        return dp[n];
+        return dp[n] = min;
     }
 }
