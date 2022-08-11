@@ -1,25 +1,20 @@
 class Solution {
     public boolean winnerSquareGame(int n) {
         
-        int[] dp = new int[n+1];
+        boolean[] dp = new boolean[n+1];
         
-        Arrays.fill(dp , -1);
-        
-        return (solve(n , dp) == 1);
-    }
-    
-    
-    public int solve(int n , int[] dp){
-        
-        if(n < 0 ) return 0;
-        
-        if(dp[n] != -1) return dp[n];
-        
-        for(int i = 1 ; i*i<=n ; i++){
+        for(int i = 1 ; i <= n ; i++){
             
-            if(solve(n - (i * i) , dp) == 0)  return dp[n] = 1;
+            for(int j = 1 ; j*j<=i ; j++){
+
+                if((i - (j * j) >= 0) && !dp[i - (j * j)]){
+                    dp[i] = true;
+                    break;
+                }
+            }
+
         }
-        return dp[n] = 0;
         
+        return dp[n];
     }
 }
