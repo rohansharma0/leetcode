@@ -6,10 +6,14 @@ class Solution {
         Arrays.fill(dp , -1);
         
         int max = 0;
-        for(int i = 1 ; i< n ; i++){
-            int x = solve(n - i , dp) * i;
-            max =  Math.max(x , max);
+        
+        for(int i = 1 ; i<n ; i++){
+            int x = solve(n-i , dp) * i;
+            
+            max = Math.max(x  , max);
         }
+        
+        
         return max;
     }
     
@@ -19,12 +23,15 @@ class Solution {
         
         if(dp[n] != -1) return dp[n];
         
-        int max = 0;
-        for(int i = 1; i<=n; i++){
-            int x = solve(n - i , dp) * i;
+        int max = n;
+        
+        for(int i = 1 ; i<n ; i++){
+            int x = solve(n-i , dp) * i;
+            
             max = Math.max(x , max);
         }
-        return dp[n] =  Math.max(n , max);
         
+        
+        return dp[n] = max;
     }
 }
