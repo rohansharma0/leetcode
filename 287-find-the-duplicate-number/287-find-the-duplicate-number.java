@@ -7,16 +7,16 @@ class Solution {
         do{
             s = nums[s];
             f = nums[nums[f]];
-            
         }while(s != f);
         
         f = nums[0];
         
         while(s != f){
-            f = nums[f];
             s = nums[s];
+            f = nums[f];
         }
         
         return s;
+        
     }
 }
