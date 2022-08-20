@@ -3,35 +3,41 @@ class Solution {
         
         List<List<Integer>> ans = new ArrayList<>();
         
-        int n = nums.length;
-
         Arrays.sort(nums);
         
-        for(int i = 0; i< n - 2; i++){
+        for(int i = 0 ; i< nums.length-2; i++){
+            
             if(i == 0 || (i > 0 && nums[i] != nums[i-1])){
                 
-                int lo = i+1;
-                int hi = n-1;
-                int sum = 0 - nums[i];
+                int j = i+1;
+                int k = nums.length-1;
                 
-                while(lo < hi){
-                    if(nums[lo] + nums[hi] == sum){
-                        ans.add(Arrays.asList(nums[i] , nums[lo] , nums[hi]));
-                        while(lo < hi && nums[lo] == nums[lo+1]) lo++;
-                        while(lo < hi && nums[hi] == nums[hi-1]) hi--;
-                        lo++;
-                        hi--;
+                int tar = -1 * nums[i];
+            
+                while(j < k){
+                    if(nums[j] + nums[k] > tar){
+                        k--; 
+                    }else if(nums[j] + nums[k] < tar){
+                        j++;
+                    }else{
+                        List<Integer> t = new ArrayList<>();
+
+                        t.add(nums[i]);
+                        t.add(nums[j]);
+                        t.add(nums[k]);
+
+                        ans.add(new ArrayList<>(t));
+                        
+                        while(j < k && nums[j] == nums[j+1])j++;
+                        while(j < k && nums[k] == nums[k-1])k--;
+                        j++;
+                        k--;
+                        
                     }
-                    else if(nums[lo] + nums[hi] < sum) lo++;
-                    else hi--;
                 }
-                
             }
         }
         
-        
         return ans;
-        
     }
-    
 }
