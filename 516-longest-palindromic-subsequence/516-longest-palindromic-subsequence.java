@@ -1,28 +1,35 @@
 class Solution {
     public int longestPalindromeSubseq(String s) {
         
-        StringBuilder s2 = new StringBuilder(s);
-        s2.reverse();
+        StringBuilder t = new StringBuilder(s);
         
-        int n = s.length();
-        int m = s2.length();
+        return longestCommonSubsequence(s , t.reverse().toString());
         
-        int[] prev = new int[m+1];
+    }
+    
+    public int longestCommonSubsequence(String text1, String text2) {
         
-        for(int i = 1 ; i<= n ; i++){
-            int[] curr = new int[m+1];
-            for(int j = 1 ; j<= m ; j++){
+        int n1 = text1.length();
+        int n2 = text2.length();
+        
+        int[][] dp = new int[n1+1][n2+1];
+        
+        
+        for(int i =1 ; i<=n1 ; i++){
+            
+            for(int j = 1 ; j<=n2 ; j++){
                 
-                if(s.charAt(i-1) == s2.charAt(j-1)){
-                    curr[j] = prev[j-1]+1;
+                if(text1.charAt(i-1) == text2.charAt(j-1)){
+                    dp[i][j] = 1 + dp[i-1][j-1];
                 }else{
-                    curr[j] = Math.max(prev[j] , curr[j-1]);
+                    dp[i][j] = Math.max(dp[i-1][j] , dp[i][j-1]);
                 }
             }
-            prev = curr;
+            
         }
         
-        return prev[m];
+        
+        return dp[n1][n2];
         
     }
 }
