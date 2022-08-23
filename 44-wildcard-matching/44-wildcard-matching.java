@@ -4,50 +4,41 @@ class Solution {
         int n = p.length();
         int m = s.length();
         
-        int[][] dp = new int[n][m];
-        
-        for(int[] x : dp){
-            Arrays.fill(x , -1);
+        boolean[][] dp = new boolean[n+1][m+1];
+       
+        for(int j = 1 ; j<= m ; j++){
+            dp[0][j] = false;
         }
         
-        return solve(n-1 , m-1 , p , s , dp);
+        for(int i = 1 ; i<= n ; i++){
+            for(int ii = 1 ; ii <= i ; ii++){
+                if(p.charAt(ii-1) != '*'){
+                    dp[i][0] = false;
+                    break;
+                }
+                dp[i][0] = true;
+            }
+        }
+
+        dp[0][0] = true;
+        
+        for(int i = 1 ; i<= n ; i++){
+            
+            for(int j = 1 ; j<= m ;j++){
+                
+                if(p.charAt(i-1) == s.charAt(j-1) || p.charAt(i-1) == '?'){
+                    dp[i][j] = dp[i-1][j-1];
+                }else if(p.charAt(i-1) == '*'){
+                    dp[i][j] = dp[i-1][j] || dp[i][j-1];
+                }else{
+                    dp[i][j] = false;
+                }
+            }
+            
+        }
+        
+        
+        return dp[n][m];
     }
     
-    public boolean solve(int i , int j , String s , String t , int[][] dp){
-        
-        if(i < 0 && j < 0) return true;
-        
-        if(i < 0 && j >= 0) return false;
-        
-        
-        if(j < 0 && i>= 0){
-            for(int x = 0 ; x <= i ; x++) if(s.charAt(x) != '*') return false;
-            
-            return true;
-        }
-        
-        if(dp[i][j] != -1) return dp[i][j] == 1;
-        
-        
-        if(s.charAt(i) == t.charAt(j) || s.charAt(i) == '?'){
-            if(solve(i-1 , j-1 , s , t , dp)){
-                dp[i][j] = 1;
-                return true;
-            }
-            dp[i][j] = 0;
-            return false;
-        }
-        
-        if(s.charAt(i) == '*'){
-            if(solve(i-1 , j , s , t , dp) || solve(i , j-1 , s , t , dp)){
-                dp[i][j] = 1;
-                return true;
-            }
-            dp[i][j] = 0;
-            return false;
-        }
-        dp[i][j] = 0;
-        return false;
-        
-    }
 }
