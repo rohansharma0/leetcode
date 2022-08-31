@@ -14,29 +14,29 @@ class Solution {
 
         int[][] dp = new int[n][n];
         
-        for(int[]x : dp){
-            Arrays.fill(x, -1);
+        for(int i = n-2 ; i >= 1 ; i--){
+            
+            for(int j = 1 ; j<= n-2 ; j++){
+                
+                if(i > j) continue;
+                
+                int max = Integer.MIN_VALUE;
+        
+                for(int k = i ; k <=  j ; k++){
+
+                    int cost = (arr[i-1] * arr[k] * arr[j+1]) + dp[i][k-1] + dp[k+1][j];
+                    max = Math.max(max , cost);
+                }
+                
+                dp[i][j] = max;
+                
+            }
+            
         }
         
-        return solve(1 , n-2 , arr , dp);
+        
+        return dp[1][n-2];
         
     }
     
-    public int solve(int i , int j , int[] nums , int[][] dp){
-        
-        if(i > j) return 0;
-        
-        if(dp[i][j] != -1 )return dp[i][j];
-        
-        int max = Integer.MIN_VALUE;
-        
-        for(int k = i ; k <=  j ; k++){
-            
-            int cost = (nums[i-1] * nums[k] * nums[j+1]) + solve(i , k-1 , nums , dp) + solve(k+1 , j, nums , dp);
-            
-            max = Math.max(max , cost);
-        }
-        
-        return dp[i][j] = max;
-    }
 }
